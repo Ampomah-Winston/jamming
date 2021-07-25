@@ -5,18 +5,33 @@ export default class Track extends Component {
     constructor(props) {
         super(props);
         this.isRemoval = false;
+        this.addTrack = this.addTrack.bind(this);
+        this.removeTrack = this.removeTrack.bind(this);
     }
     renderAction(){
-        return (<button class="Track-action">
-            {this.isRemoval ? "-" : "+"}
-        </button>)
+        if(this.props.isRemoval){
+            return <button class="Track-action" onClick={this.removeTrack}> - </button>
+        }else{
+            return <button class="Track-action" onClick={this.addTrack}> + </button>
+        }
     }
+
+    addTrack(){
+        console.log("button add click " + this.props.track.id ,this.props.track.name ,this.props.track.album)
+        this.props.onAdd(this.props.track);
+    }
+
+    removeTrack(){
+        console.log("button remove click " + this.props.track.id ,this.props.track.name ,this.props.track.album)
+        this.props.onRemove(this.props.track);
+    }
+
     render() {
         return (
             <div className="Track">
                 <div className="Track-information">
-                    {/* <h3><!-- track name will go here --></h3> */}
-                    {/* <p><!-- track artist will go here--> | <!-- track album will go here --></p> */}
+                    <h3>{this.props.track.name}</h3>
+                    <p>{this.props.track.artist } | {this.props.track.album}</p>
                 </div>
                 {this.renderAction()}
             </div>
