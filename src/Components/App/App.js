@@ -14,15 +14,20 @@ export default class App extends Component {
     this.savePlaylist = this.savePlaylist.bind(this);  
     this.search = this.search.bind(this); 
     this.state = {
-      searchResults : [{name:'name1',artist:'artist1',album:'album1',id:1},
+      searchResults : [],
+      deepResults:[],
+       playlistName : 'My playlist',
+       playlistTracks:[]
+    }
+    /*
+      {name:'name1',artist:'artist1',album:'album1',id:1},
       {name:'name2',artist:'artist2',album:'album2',id:2},
       {name:'name3',artist:'artist3',album:'album3',id:3},
-      {name:'name4',artist:'artist4',album:'album4',id:4}],
-       playlistName : 'My playlist',
-       playlistTracks:[ 
+      {name:'name4',artist:'artist4',album:'album4',id:4}
+       
        {name:'name1',artist:'artist1',album:'album1',id:1},
-       {name:'name2',artist:'artist2',album:'album2',id:2}]
-    }
+       {name:'name2',artist:'artist2',album:'album2',id:2}
+    */
   }
 
   addTrack(track){
@@ -61,8 +66,9 @@ export default class App extends Component {
   search(term){
     Spotify.search(term).then(searchResult => {
       this.setState({
-        searchResult : searchResult
+        deepResults : searchResult
       })
+      console.log(this.state.searchResult)
     })
   }
 
@@ -73,7 +79,7 @@ export default class App extends Component {
       <div class="App">
         <SearchBar onSearch={this.search}/>
         <div class="App-playlist">
-         <SearchResults searchResults={this.state.searchResults}
+         <SearchResults searchResults={this.state.deepResults}
                         onAdd={this.addTrack}/>
          <Playlist playlistName = {this.state.playlistName} 
                     playlistTracks = {this.state.playlistTracks}
